@@ -1,0 +1,16 @@
+model Reimbursement {
+  id                 String   @id @default(cuid())
+  employeeId         String
+  attendancePeriodId String
+  amount             Decimal  @db.Decimal(10, 2)
+  description        String
+  receiptUrl         String?
+  submittedAt        DateTime @default(now())
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  employee         Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  attendancePeriod AttendancePeriod @relation(fields: [attendancePeriodId], references: [id], onDelete: Cascade)
+
+  @@map("reimbursements")
+}

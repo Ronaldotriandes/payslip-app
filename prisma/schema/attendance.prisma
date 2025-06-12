@@ -1,0 +1,40 @@
+enum AttendancePeriodStatus {
+  ACTIVE
+  CLOSED
+  PAYROLL_PROCESSED
+}
+
+model AttendancePeriod {
+  id        String                 @id @default(cuid())
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  status    AttendancePeriodStatus @default(ACTIVE)
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+
+  attendances    Attendance[]
+  overtimes      Overtime[]
+  reimbursements Reimbursement[]
+  payslips       Payslip[]
+
+  @@map("attendance_periods")
+}
+
+model Attendance {
+  id                 String    @id @default(cuid())
+  employeeId         String
+  attendancePeriodId String
+  date               DateTime  @db.Date
+  checkInTime        DateTime?
+  checkOutTime       DateTime?
+  isPresent          Boolean   @default(false)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  employee         Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  attendancePeriod AttendancePeriod @relation(fields: [attendancePeriodId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, date])
+  @@map("attendances")
+}
