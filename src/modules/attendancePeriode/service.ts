@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'libs/prisma/src';
 import { CreateAttendancePeriodDto } from './dto/create-attendance-period-dto';
 
@@ -6,7 +6,7 @@ import { CreateAttendancePeriodDto } from './dto/create-attendance-period-dto';
 export class AttendancePeriodeService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async createAttendancePeriod(createAttendancePeriodDto: CreateAttendancePeriodDto) {
+    async createAttendancePeriod(user: any, createAttendancePeriodDto: CreateAttendancePeriodDto) {
         const { startDate, endDate, name } = createAttendancePeriodDto;
 
         const start = new Date(startDate);
@@ -21,38 +21,11 @@ export class AttendancePeriodeService {
                 startDate: start,
                 endDate: end,
                 status: 'ACTIVE',
-                name
+                name,
+                createdBy: user?.employee?.id || user.id,
             },
         });
-        const existingPeriod = await this.prisma.attendancePeriod.findFirst({
-            where: {
-                OR: [
-                    {
-                        AND: [
-                            { startDate: { lte: end } },
-                            { endDate: { gte: start } }
-                        ]
-                    }
-                ]
-            }
-        });
 
-        if (existingPeriod) {
-            throw new ConflictException('Attendance period overlaps with existing period for this payroll');
-        }
-
-        try {
-
-            return {
-                success: true,
-                message: 'Attendance period created successfully',
-            };
-        } catch (error) {
-            if (error.code === 'P2002') {
-                throw new ConflictException('Attendance period with these details already exists');
-            }
-            throw error;
-        }
     }
 
 

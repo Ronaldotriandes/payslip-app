@@ -55,6 +55,7 @@ export class OvertimeService {
                 date: currentDate,
                 hours: body.hours,
                 description: body.description,
+                createdBy: user?.employee?.id || user.id,
             }
         });
 

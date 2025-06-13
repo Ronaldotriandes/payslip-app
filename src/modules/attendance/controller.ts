@@ -12,6 +12,6 @@ export class AttendanceController {
 
     async addAttendance(@GetUser() user: any) {
         const result = await this.attendanceService.createAttendance(user);
-        return new CreatedResponseDto('Attendance period created successfully', result);
+        return new CreatedResponseDto('Attendance successfully', result);
     }
 }

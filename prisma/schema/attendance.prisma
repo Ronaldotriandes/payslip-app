@@ -5,14 +5,14 @@ enum AttendancePeriodStatus {
 }
 
 model AttendancePeriod {
-  id        String                 @id @default(cuid())
-  name      String
-  startDate DateTime
-  endDate   DateTime
-  status    AttendancePeriodStatus @default(ACTIVE)
-  createdAt DateTime               @default(now())
-  updatedAt DateTime               @updatedAt
-
+  id             String                 @id @default(cuid())
+  name           String
+  startDate      DateTime
+  endDate        DateTime
+  status         AttendancePeriodStatus @default(ACTIVE)
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  createdBy      String?
   attendances    Attendance[]
   overtimes      Overtime[]
   reimbursements Reimbursement[]
@@ -31,6 +31,7 @@ model Attendance {
   isPresent          Boolean   @default(false)
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
+  createdBy          String?
 
   employee         Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   attendancePeriod AttendancePeriod @relation(fields: [attendancePeriodId], references: [id], onDelete: Cascade)

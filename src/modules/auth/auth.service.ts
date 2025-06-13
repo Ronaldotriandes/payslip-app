@@ -33,7 +33,6 @@ export class AuthService {
             employee: user.employee,
             sub: user.id, role: user.role
         };
-        console.log(this.jwtService.sign(payload),)
 
         return {
             access_token: this.jwtService.sign(payload),
@@ -104,7 +103,7 @@ export class AuthService {
                 }
             }
         });
-        if (user && user.employee) {
+        if (user) {
             return {
                 id: user.id,
                 username: user.username,

@@ -15,13 +15,6 @@ export class CreateAttendancePeriodDto {
     endDate: string;
 
 
-    toDto(): CreateAttendancePeriode {
-        return {
-            name: this.name,
-            startDate: this.startDate,
-            endDate: this.endDate,
-        };
-    }
 
 }
 

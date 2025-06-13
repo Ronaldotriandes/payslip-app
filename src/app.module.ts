@@ -8,6 +8,7 @@ import { AttendancePeriodeModule } from './modules/attendancePeriode/module';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import { OvertimeModule } from './modules/overtime/module';
+import { PayslipModule } from './modules/payslip/module';
 import { ReimbursementsModule } from './modules/reimbursement/module';
 
 @Module({
@@ -18,7 +19,8 @@ import { ReimbursementsModule } from './modules/reimbursement/module';
     AttendancePeriodeModule,
     AttendanceModule,
     OvertimeModule,
-    ReimbursementsModule
+    ReimbursementsModule,
+    PayslipModule
   ],
   controllers: [AppController],
   providers: [

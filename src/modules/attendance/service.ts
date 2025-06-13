@@ -64,6 +64,7 @@ export class AttendanceService {
                 date: currentDate,
                 checkInTime: currentDate,
                 isPresent: true,
+                createdBy: user.employee.id,
             }
         });
 

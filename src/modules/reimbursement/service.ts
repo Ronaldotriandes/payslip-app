@@ -34,6 +34,7 @@ export class ReimbursementsService {
                 employeeId: user.employee.id,
                 amount: body.amount,
                 description: body.description,
+                createdBy: user?.employee?.id || user.id,
             }
         });
 

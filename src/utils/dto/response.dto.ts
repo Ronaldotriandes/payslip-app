@@ -12,6 +12,19 @@ export class ResponseDto {
     }
 }
 
+export class GetResponseDto extends ResponseDto {
+    code: number = 200;
+    message: string = ResponseMessageEnum.Get;
+    result: any = null;
+
+    constructor(message?: string, result?: any) {
+        super();
+        this.code = 200;
+        this.message = message || ResponseMessageEnum.Post;
+        this.result = result !== undefined ? result : null;
+    }
+}
+
 export class CreatedResponseDto extends ResponseDto {
     code: number = 201;
     message: string = ResponseMessageEnum.Post;

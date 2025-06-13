@@ -13,6 +13,7 @@ CREATE TABLE "attendance_periods" (
     "status" "AttendancePeriodStatus" NOT NULL DEFAULT 'ACTIVE',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdBy" TEXT,
 
     CONSTRAINT "attendance_periods_pkey" PRIMARY KEY ("id")
 );
@@ -28,6 +29,7 @@ CREATE TABLE "attendances" (
     "isPresent" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdBy" TEXT,
 
     CONSTRAINT "attendances_pkey" PRIMARY KEY ("id")
 );
@@ -43,6 +45,7 @@ CREATE TABLE "employees" (
     "overtimeRate" DECIMAL(3,2) NOT NULL DEFAULT 1.5,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdBy" TEXT,
 
     CONSTRAINT "employees_pkey" PRIMARY KEY ("id")
 );
@@ -57,6 +60,7 @@ CREATE TABLE "overtimes" (
     "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdBy" TEXT,
 
     CONSTRAINT "overtimes_pkey" PRIMARY KEY ("id")
 );
@@ -74,12 +78,11 @@ CREATE TABLE "payslips" (
     "overtimeRate" DECIMAL(3,2) NOT NULL DEFAULT 1.5,
     "overtimeAmount" DECIMAL(10,2) NOT NULL DEFAULT 0,
     "totalReimbursements" DECIMAL(10,2) NOT NULL DEFAULT 0,
-    "grossPay" DECIMAL(10,2) NOT NULL DEFAULT 0,
-    "deductions" DECIMAL(10,2) NOT NULL DEFAULT 0,
     "netPay" DECIMAL(10,2) NOT NULL DEFAULT 0,
     "generatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdBy" TEXT NOT NULL,
 
     CONSTRAINT "payslips_pkey" PRIMARY KEY ("id")
 );
@@ -95,6 +98,7 @@ CREATE TABLE "reimbursements" (
     "submittedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdBy" TEXT,
 
     CONSTRAINT "reimbursements_pkey" PRIMARY KEY ("id")
 );
@@ -121,7 +125,7 @@ CREATE UNIQUE INDEX "employees_userId_key" ON "employees"("userId");
 CREATE UNIQUE INDEX "employees_email_key" ON "employees"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "payslips_employeeId_attendancePeriodId_key" ON "payslips"("employeeId", "attendancePeriodId");
+CREATE UNIQUE INDEX "payslips_employeeId_key" ON "payslips"("employeeId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_username_key" ON "users"("username");

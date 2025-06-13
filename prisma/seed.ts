@@ -18,24 +18,29 @@ async function main() {
 
     const employees: any = []
     const firstNames = [
-        'John', 'Jane', 'Michael', 'Sarah', 'David', 'Emily', 'Robert', 'Lisa',
-        'William', 'Jennifer', 'James', 'Mary', 'Christopher', 'Patricia', 'Daniel',
-        'Linda', 'Matthew', 'Elizabeth', 'Anthony', 'Barbara', 'Mark', 'Susan',
-        'Donald', 'Jessica', 'Steven', 'Margaret', 'Paul', 'Dorothy', 'Andrew',
-        'Lisa', 'Joshua', 'Nancy', 'Kenneth', 'Karen', 'Kevin', 'Betty', 'Brian',
-        'Helen', 'George', 'Sandra', 'Timothy', 'Donna', 'Ronald', 'Carol',
-        'Jason', 'Ruth', 'Edward', 'Sharon', 'Jeffrey', 'Michelle'
+        'Ahmad', 'Siti', 'Budi', 'Andi', 'Dewi', 'Rudi', 'Sri', 'Agus',
+        'Indra', 'Maya', 'Dedi', 'Rina', 'Hadi', 'Lina', 'Joko', 'Sari',
+        'Bambang', 'Fitri', 'Eko', 'Dian', 'Wawan', 'Yuni', 'Tono', 'Ratna',
+        'Hendra', 'Novi', 'Doni', 'Ika', 'Reza', 'Ayu', 'Fajar', 'Mega',
+        'Rizki', 'Putri', 'Adi', 'Wulan', 'Bayu', 'Sinta', 'Dimas', 'Lia',
+        'Arif', 'Nita', 'Yoga', 'Tari', 'Iman', 'Dina', 'Feri', 'Rini',
+        'Gilang', 'Siska'
     ]
 
     const lastNames = [
-        'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller',
-        'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez',
-        'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin',
-        'Lee', 'Perez', 'Thompson', 'White', 'Harris', 'Sanchez', 'Clark',
-        'Ramirez', 'Lewis', 'Robinson', 'Walker', 'Young', 'Allen', 'King',
-        'Wright', 'Scott', 'Torres', 'Nguyen', 'Hill', 'Flores', 'Green',
-        'Adams', 'Nelson', 'Baker', 'Hall', 'Rivera', 'Campbell', 'Mitchell',
-        'Carter', 'Roberts'
+        'Pratama', 'Sari', 'Wijaya', 'Kusuma', 'Santoso', 'Wati', 'Putra', 'Dewi',
+        'Setiawan', 'Lestari', 'Nugroho', 'Anggraini', 'Hidayat', 'Maharani', 'Saputra', 'Permata',
+        'Gunawan', 'Safitri', 'Kurniawan', 'Rahayu', 'Sutrisno', 'Handayani', 'Firmansyah', 'Puspita',
+        'Hermawan', 'Cahyani', 'Suryanto', 'Melati', 'Hakim', 'Kartika', 'Ramadhan', 'Indah',
+        'Maulana', 'Sartika', 'Firdaus', 'Pertiwi', 'Syahputra', 'Utami', 'Rahman', 'Ningrum',
+        'Adiputra', 'Safira', 'Mahendra', 'Arimbi', 'Nugraha', 'Kusumawati', 'Prabowo', 'Maharani',
+        'Wibowo', 'Damayanti'
+    ]
+
+    const salaryRanges = [
+        { min: 1000000, max: 3000000 },
+        { min: 3000000, max: 6000000 },
+        { min: 6000000, max: 10000000 },
     ]
 
     for (let i = 1; i <= 100; i++) {
@@ -45,7 +50,8 @@ async function main() {
         const username = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i}`
         const email = `${username}@company.com`
 
-        const baseSalary = Math.floor(Math.random() * 5000) + 3000
+        const salaryRange = salaryRanges[Math.floor(Math.random() * salaryRanges.length)]
+        const baseSalary = Math.floor(Math.random() * (salaryRange.max - salaryRange.min + 1)) + salaryRange.min
         const hourlyRate = Math.round((baseSalary / 160) * 100) / 100
 
         const hashedPassword = await bcrypt.hash(`password${i}`, 10)
@@ -81,16 +87,14 @@ async function main() {
 
     await prisma.attendancePeriod.create({
         data: {
-            name: 'January 2024',
+            name: 'Januari 2024',
             startDate: new Date('2024-01-01'),
             endDate: new Date('2024-01-31'),
             status: 'ACTIVE',
         },
     })
 
-
     console.log('Seed completed successfully!')
-
 }
 
 main()
